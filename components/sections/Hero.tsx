@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { avatars } from "@/lib/data";
 
-const HERO_IMAGE = "/images/hero-a.jpeg";
+const HERO_IMAGE = "/images/brande.jpg";
 
 export default function Hero() {
   return (
