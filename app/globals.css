@@ -1,26 +1,154 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #eceae4;
+  --foreground: #141414;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+
+  /* Fonts (variable defined in app/layout.tsx via next/font) */
+  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+
+  /* Brand palette -> bg-brand-accent, text-brand-dark, etc. */
+  --color-brand-accent: #8c52fc;
+  --color-brand-accent-hover: #8c52fc;
+  --color-brand-dark: #141414;
+  --color-brand-slate: #4a4c50;
+  --color-brand-cream: #f4f2ec;
+  --color-brand-sand: #ebe8df;
+  --color-brand-border: #e3e0d6;
+
+  /* Lighter tint of the accent, for text/icons on dark backgrounds */
+  --color-accent-soft: #c9adff;
+
+  /* ---------- Services page palette (accent follows the brand purple) ---------- */
+  --color-surface: #f9f9f6;
+  --color-surface-dim: #dadad7;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #f4f4f1;
+  --color-surface-container: #eeeeeb;
+  --color-surface-container-high: #e8e8e5;
+  --color-surface-container-highest: #e2e3e0;
+  --color-on-background: #1a1c1b;
+  --color-on-surface: #1a1c1b;
+  --color-primary: #6d35d6;
+  --color-primary-container: #8c52fc;
+  --color-primary-fixed-dim: #7a40ec;
+  --color-secondary: #575e70;
+  --color-outline-variant: #c5c9ac;
+  --color-inverse-surface: #2f312f;
+  --color-inverse-on-surface: #f1f1ee;
+
+  /* Extra radii */
+  --radius-4xl: 2rem;
+  --radius-5xl: 2.5rem;
+  --radius-card: 2rem;
+  --radius-panel: 3rem;
+
+  /* Spacing tokens (p-space-md, px-margin-lg, ...) */
+  --spacing-space-xs: 0.375rem;
+  --spacing-space-sm: 0.75rem;
+  --spacing-space-md: 1.25rem;
+  --spacing-space-lg: 2rem;
+  --spacing-space-xl: 3.5rem;
+  --spacing-margin: 1.25rem;
+  --spacing-margin-md: 2.5rem;
+  --spacing-margin-lg: 4rem;
+
+  /* Type scale (text-headline-xl, text-body-md, ...) */
+  --text-headline-2xl: 64px;
+  --text-headline-2xl--line-height: 72px;
+  --text-headline-2xl--letter-spacing: -0.03em;
+  --text-headline-2xl--font-weight: 800;
+
+  --text-headline-2xl-mobile: 40px;
+  --text-headline-2xl-mobile--line-height: 48px;
+  --text-headline-2xl-mobile--letter-spacing: -0.025em;
+  --text-headline-2xl-mobile--font-weight: 800;
+
+  --text-headline-xl: 48px;
+  --text-headline-xl--line-height: 56px;
+  --text-headline-xl--letter-spacing: -0.025em;
+  --text-headline-xl--font-weight: 700;
+
+  --text-headline-lg: 36px;
+  --text-headline-lg--line-height: 44px;
+  --text-headline-lg--letter-spacing: -0.02em;
+  --text-headline-lg--font-weight: 700;
+
+  --text-headline-lg-mobile: 26px;
+  --text-headline-lg-mobile--line-height: 34px;
+  --text-headline-lg-mobile--letter-spacing: -0.015em;
+  --text-headline-lg-mobile--font-weight: 700;
+
+  --text-headline-sm: 22px;
+  --text-headline-sm--line-height: 30px;
+  --text-headline-sm--letter-spacing: -0.01em;
+  --text-headline-sm--font-weight: 600;
+
+  --text-body-xl: 20px;
+  --text-body-xl--line-height: 32px;
+  --text-body-xl--letter-spacing: -0.005em;
+  --text-body-xl--font-weight: 400;
+
+  --text-body-lg: 17px;
+  --text-body-lg--line-height: 28px;
+  --text-body-lg--font-weight: 400;
+
+  --text-body-md: 15px;
+  --text-body-md--line-height: 24px;
+  --text-body-md--font-weight: 400;
+
+  --text-label-lg: 14px;
+  --text-label-lg--line-height: 20px;
+  --text-label-lg--letter-spacing: 0.01em;
+  --text-label-lg--font-weight: 600;
+
+  --text-label-md: 12px;
+  --text-label-md--line-height: 16px;
+  --text-label-md--letter-spacing: 0.03em;
+  --text-label-md--font-weight: 600;
+
+  --text-label-sm: 11px;
+  --text-label-sm--line-height: 14px;
+  --text-label-sm--letter-spacing: 0.06em;
+  --text-label-sm--font-weight: 700;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  -webkit-font-smoothing: antialiased;
+}
+
+/* The services page has its own off-white background. Painting it on the
+   body too (the body background fills the whole viewport) means no gray
+   strips can appear on the sides, whatever width the page wrapper has. */
+body:has([data-page="services"]) {
+  background: #f9f9f6;
+}
+
+.frosted-btn {
+  background: rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+.frosted-btn:hover {
+  background: rgba(255, 255, 255, 0.35);
 }

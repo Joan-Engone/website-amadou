@@ -15,6 +15,12 @@ const nextConfig: NextConfig = {
       },
     },
   },
+  // Needed for the hero image in components/sections/Hero.tsx
+  images: {
+    remotePatterns: [
+      { protocol: "https", hostname: "lh3.googleusercontent.com" },
+    ],
+  },
 };
 
 export default nextConfig;
